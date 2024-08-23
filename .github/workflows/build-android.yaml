@@ -30,7 +30,7 @@ jobs:
 
       - name: Build Android Release
         run: |
-          cd android && ./gradlew assembleRelease
+          cd ./gradlew :app:assembleDebug -PreactNativeArchitectures=x86
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
