@@ -67,13 +67,13 @@ jobs:
       - name: Install Node modules
         run: npm install
 
-      - name: Restore Gradle cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      # - name: Restore Gradle cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ~/.gradle/caches
+      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-gradle-
 
       - name: Build Android Release
         run: |
