@@ -2154,6 +2154,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/cli-platform-android@npm:^14.0.1":
+  version: 14.0.1
+  resolution: "@react-native-community/cli-platform-android@npm:14.0.1"
+  dependencies:
+    "@react-native-community/cli-tools": 14.0.1
+    chalk: ^4.1.2
+    execa: ^5.0.0
+    fast-glob: ^3.3.2
+    fast-xml-parser: ^4.2.4
+    logkitty: ^0.7.1
+  checksum: 2c772d1b23ddb86ad0079e9e8a38f223c463ee376194f32613380d2b6a59837d758ae6ec437caaf76e47452b6a21a2cf3166dbf2b53606f0f2bed2472937a7cb
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-platform-apple@npm:14.0.0":
   version: 14.0.0
   resolution: "@react-native-community/cli-platform-apple@npm:14.0.0"
@@ -2244,6 +2258,24 @@ __metadata:
     shell-quote: ^1.7.3
     sudo-prompt: ^9.0.0
   checksum: eb058335ad83c333709e50f6f8fd53a88e4a392cd710f1e3cc5ac5931aa1b0543da78c1aa82b5cb7834ce19a21fbd3b820a39632cb54fd179358674581e0078d
+  languageName: node
+  linkType: hard
+
+"@react-native-community/cli-tools@npm:14.0.1":
+  version: 14.0.1
+  resolution: "@react-native-community/cli-tools@npm:14.0.1"
+  dependencies:
+    appdirsjs: ^1.2.4
+    chalk: ^4.1.2
+    execa: ^5.0.0
+    find-up: ^5.0.0
+    mime: ^2.4.1
+    open: ^6.2.0
+    ora: ^5.4.1
+    semver: ^7.5.2
+    shell-quote: ^1.7.3
+    sudo-prompt: ^9.0.0
+  checksum: 868aac9ab3144a1838b33d42f73ff66f777d6079d6d03e75320b66d2ee55f857d4b05152bce230b72caa3d012735830d24c79ddf7713909c359ce8572b92786d
   languageName: node
   linkType: hard
 
@@ -8227,6 +8259,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.20.0
     "@babel/runtime": ^7.20.0
+    "@react-native-community/cli-platform-android": ^14.0.1
     "@react-native/babel-preset": 0.75.2
     "@react-native/eslint-config": 0.75.2
     "@react-native/metro-config": 0.75.2
