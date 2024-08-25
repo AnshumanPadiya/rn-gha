@@ -92,6 +92,7 @@ jobs:
       steps:
         - name: Generate Release Notes
           run: |
+            ls
             chmod +x generate-release-notes.sh
               generate-release-notes.sh
 
@@ -105,7 +106,7 @@ jobs:
             release_name: Release v1.0.0
             body_path: ./release-notes.md
             draft: false
-            prerelease: false
+            prerelease: false 
 
         - name: Upload Release Asset
           uses: actions/upload-release-asset@v1
