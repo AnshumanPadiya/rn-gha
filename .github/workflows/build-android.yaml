@@ -92,28 +92,29 @@ jobs:
       steps:
         - name: Generate Release Notes
           run: |
+            pwd
             ls 
-        #     chmod +x generate-release-notes.sh
-        #       generate-release-notes.sh
+            chmod +x generate-release-notes.sh
+              generate-release-notes.sh
 
-        # - name: Create GitHub Release
-        #   id: create_release
-        #   uses: actions/create-release@v1
-        #   env:
-        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #   with:
-        #     tag_name: v1.0.0
-        #     release_name: Release v1.0.0
-        #     body_path: ./release-notes.md
-        #     draft: false
-        #     prerelease: false 
+        - name: Create GitHub Release
+          id: create_release
+          uses: actions/create-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            tag_name: v1.0.0
+            release_name: Release v1.0.0
+            body_path: ./release-notes.md
+            draft: false
+            prerelease: false 
 
-        # - name: Upload Release Asset
-        #   uses: actions/upload-release-asset@v1
-        #   env:
-        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #   with:
-        #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-        #     asset_path: android/app/build/outputs/apk/
-        #     asset_name: app-release.apk
-        #     asset_content_type: application/vnd.android.package-archive
+        - name: Upload Release Asset
+          uses: actions/upload-release-asset@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: android/app/build/outputs/apk/
+            asset_name: app-release.apk
+            asset_content_type: application/vnd.android.package-archive
