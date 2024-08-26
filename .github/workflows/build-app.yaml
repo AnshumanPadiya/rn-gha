@@ -1,73 +1,73 @@
-name: Build & Publish Release APK
+# name: Build & Publish Release APK
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  Gradle:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-java@v4
-        with:
-          distribution: "adopt"
-          java-version: "21"
+# jobs:
+#   Gradle:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/setup-java@v4
+#         with:
+#           distribution: "adopt"
+#           java-version: "21"
 
-      - uses: actions/checkout@v3
+#       - uses: actions/checkout@v3
 
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+#       - name: Cache node modules
+#         id: cache-npm
+#         uses: actions/cache@v3
+#         env:
+#           cache-name: cache-node-modules
+#         with:
+#           path: ~/.npm
+#           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.os }}-build-${{ env.cache-name }}-
+#             ${{ runner.os }}-build-
+#             ${{ runner.os }}-
 
-      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-        name: List the state of node modules
-        continue-on-error: true
-        run: npm list
+#       - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+#         name: List the state of node modules
+#         continue-on-error: true
+#         run: npm list
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Cache Gradle
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+#       - name: Cache Gradle
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.gradle/caches
+#           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+#           restore-keys: |
+#             ${{ runner.os }}-gradle-
 
-      # - name: Make Gradle executable
-      #   run: chmod +x ./gradlew
-      # - name: Build Release APK
-      #   run: cd android && ./gradlew assembleRelease
-      # - name: Releasing using Hub
-      #   uses: sangatdesai/release-apk@main
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
-      #     APP_FOLDER: app
+#       # - name: Make Gradle executable
+#       #   run: chmod +x ./gradlew
+#       # - name: Build Release APK
+#       #   run: cd android && ./gradlew assembleRelease
+#       # - name: Releasing using Hub
+#       #   uses: sangatdesai/release-apk@main
+#       #   env:
+#       #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#       #     APP_FOLDER: app
 
-      # - name: Make Gradle executable
-      #   run: cd andoird && chmod +x ./gradlew
-      - name: Build with Gradle
-        run: | 
-          ls
-          ./gradlew build
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
-      - name: Releasing using Hub
-        uses: yurakurets/action-release-debugapk@master
-        env:
-          REPO_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          APK_FOLDER: android/app/build/outputs/apk/app-release.apk
-          APP_FOLDER: android/app
-          RELEASE_TITLE: New Build
+#       # - name: Make Gradle executable
+#       #   run: cd andoird && chmod +x ./gradlew
+#       - name: Build with Gradle
+#         run: | 
+#           ls
+#           ./gradlew build
+#       - name: Build Debug APK
+#         run: ./gradlew assembleDebug
+#       - name: Releasing using Hub
+#         uses: yurakurets/action-release-debugapk@master
+#         env:
+#           REPO_BRANCH: main
+#           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#           APK_FOLDER: android/app/build/outputs/apk/app-release.apk
+#           APP_FOLDER: android/app
+#           RELEASE_TITLE: New Build
