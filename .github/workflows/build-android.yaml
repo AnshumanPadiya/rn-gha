@@ -90,12 +90,12 @@ jobs:
       needs: build-android
       
       steps:
-        - name: Generate Release Notes
-          run: |
-            pwd
-            ls 
-            chmod +x generate-release-notes.sh
-              generate-release-notes.sh
+        # - name: Generate Release Notes
+        #   run: |
+        #     pwd
+        #     ls 
+        #     chmod +x generate-release-notes.sh
+        #       generate-release-notes.sh
 
         - name: Create GitHub Release
           id: create_release
