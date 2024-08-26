@@ -58,7 +58,9 @@ jobs:
       # - name: Make Gradle executable
       #   run: cd andoird && chmod +x ./gradlew
       - name: Build with Gradle
-        run: cd andoird && ./gradlew build
+        run: | 
+          ls
+          ./gradlew build
       - name: Build Debug APK
         run: ./gradlew assembleDebug
       - name: Releasing using Hub
