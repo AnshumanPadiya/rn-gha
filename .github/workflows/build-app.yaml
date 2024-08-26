@@ -55,10 +55,10 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.TOKEN }}
       #     APP_FOLDER: app
 
-      - name: Make Gradle executable
-        run: cd andoird && chmod +x ./gradlew
+      # - name: Make Gradle executable
+      #   run: cd andoird && chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradlew build
+        run: cd andoird && ./gradlew build
       - name: Build Debug APK
         run: ./gradlew assembleDebug
       - name: Releasing using Hub
