@@ -3,7 +3,7 @@ name: "Build Android App"
 on:
   push:
     branches:
-      - test
+      - main
 
 jobs:
   install:
@@ -90,26 +90,29 @@ jobs:
       needs: build-android
       
       steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Get previous tag
-        id: prev_tag
-        run: echo "::set-output name=prev_tag::$(git describe --tags --abbrev=0 HEAD^)"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          echo "Release Notes: "
-          echo "::set-output name=notes::$(git log --pretty=format:'%h - %s' $(echo ${{ steps.prev_tag.outputs.prev_tag }})..HEAD)"
+      - name: Install Conventional Changelog
+        run: npm install -g conventional-changelog-cli
 
-      - name: Create GitHub Release
+      - name: Generate Changelog
+        run: conventional-changelog -p angular -i CHANGELOG.md -s
+
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          release_name: Release v1.0.${{ github.run_number }}
-          body: ${{ steps.release_notes.outputs.notes }}
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          body_path: ./CHANGELOG.md
           draft: false
           prerelease: false
 
@@ -117,6 +120,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: path-to-apk/app-release.apk
+          asset_path: android/app/build/outputs/apk/release/app-release.apk
           asset_name: app-release.apk
           asset_content_type: application/vnd.android.package-archive

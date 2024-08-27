@@ -3,8 +3,8 @@ name: Build & Publish Release APK
 on:
   push:
     branches:
-      - main
-      
+      - test
+
 jobs:
   build-android-app:
     runs-on: ubuntu-latest
