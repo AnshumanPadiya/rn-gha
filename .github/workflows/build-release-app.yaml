@@ -57,6 +57,8 @@ jobs:
 
   build-android:
     needs: install
+    outputs:
+      artifact-success: ${{ steps.upload-artifact.outcome }}
     runs-on: ubuntu-latest
     steps:
       - name: Setup Java
@@ -102,6 +104,7 @@ jobs:
           ./gradlew :app:assembleDebug
 
       - name: Upload Artifact
+        id: upload-artifact
         uses: actions/upload-artifact@v2
         with:
           name: app-release.apk
@@ -109,7 +112,7 @@ jobs:
 
   create-release-notes:
     needs: build-android
-    if: ${{ needs.build-android.outputs.conclusion == 'success' }}
+    if: ${{ needs.build-android.outputs.artifact-success == 'success' }}
     uses: ./.github/workflows/create-release.yaml
     with:
       RESOURCE_FAMILY: ${{ inputs.RESOURCE_FAMILY }}
