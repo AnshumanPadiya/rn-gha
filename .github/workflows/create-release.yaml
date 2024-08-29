@@ -22,6 +22,15 @@ jobs:
   create-release-notes:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: app-release.apk
+          path: ./downloaded-artifact
+
       - name: Install Conventional Changelog
         run: npm install -g conventional-changelog-cli
 
