@@ -1,0 +1,55 @@
+on:
+  workflow_call:
+    inputs:
+      RESOURCE_FAMILY:
+        required: true
+        type: string
+      BRANCH:
+        required: true
+        type: string
+      awsRegion:
+        required: true
+        type: string
+
+name: Create Release notes
+run-name: Create Release notes (${{ inputs.RESOURCE_FAMILY }})
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  create-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Conventional Changelog
+        run: npm install -g conventional-changelog-cli
+
+      - name: Generate Changelog
+        run: conventional-changelog -p angular -i CHANGELOG.md -s
+
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          body_path: ./CHANGELOG.md
+          draft: false
+          prerelease: false
+
+      - name: Check current directory
+        run: |
+          ls -alh
+
+      - name: Upload APK to Github
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: android/app/build/outputs/apk/debug/app-debug.apk
+          asset_name: app-debug.apk
+          asset_content_type: application/vnd.android.package-archive
