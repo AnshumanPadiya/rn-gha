@@ -109,7 +109,7 @@ jobs:
 
   create-release-notes:
     needs: build-android
-    if: ${{ needs.build-android.outputs.result == 'success' }}
+    if: ${{ needs.build-android.outputs.conclusion == 'success' }}
     uses: ./.github/workflows/create-release.yaml
     with:
       RESOURCE_FAMILY: ${{ inputs.RESOURCE_FAMILY }}
