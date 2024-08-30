@@ -30,6 +30,9 @@ jobs:
         with:
           name: app-release.apk
           path: ./downloaded-artifact
+      
+      - name: List downloaded files
+        run: ls -alh ./downloaded-artifact
 
       - name: Install Conventional Changelog
         run: npm install -g conventional-changelog-cli
