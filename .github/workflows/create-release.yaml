@@ -32,7 +32,7 @@ jobs:
           path: ./downloaded-artifact
       
       - name: List downloaded files
-        run: ls -alh ./downloaded-artifact
+        run: ls -alh ./downloaded-artifact/debug
 
       - name: Install Conventional Changelog
         run: npm install -g conventional-changelog-cli
