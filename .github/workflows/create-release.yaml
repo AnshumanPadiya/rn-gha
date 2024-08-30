@@ -65,7 +65,7 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: app-release
+          name: app-release.apk
         
       - name: Create Release notes
         uses: ncipollo/release-action@v1
