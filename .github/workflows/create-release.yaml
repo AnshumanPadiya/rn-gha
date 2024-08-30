@@ -16,7 +16,7 @@ run-name: Create Release notes (${{ inputs.RESOURCE_FAMILY }})
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 
 jobs:
   create-release-notes:
