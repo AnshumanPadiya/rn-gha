@@ -72,4 +72,4 @@ jobs:
         with:
           tag: "v${{ github.run_number }}"
           commit: ${{ github.sha }}
-          artifacts: "app-release.apk"
+          artifacts: "./downloaded-artifact/app-release.apk"
