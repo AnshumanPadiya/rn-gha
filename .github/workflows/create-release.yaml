@@ -22,54 +22,54 @@ jobs:
   create-release-notes:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # - name: Download Artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: app-release.apk
-      #     path: ./downloaded-artifact
-
-      # - name: Install Conventional Changelog
-      #   run: npm install -g conventional-changelog-cli
-
-      # - name: Generate Changelog
-      #   run: conventional-changelog -p angular -i CHANGELOG.md -s
-
-      # - name: Create Release
-      #   id: create-release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: v${{ github.run_number }}
-      #     release_name: Release ${{ github.run_number }}
-      #     body_path: ./CHANGELOG.md
-      #     draft: false
-      #     prerelease: false
-
-      # - name: Check current directory
-      #   run: |
-      #     ls -alh
-
-      # - name: Upload APK to Github
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create-release.outputs.upload_url }}
-      #     asset_path: ./downloaded-artifact/app-debug.apk
-      #     asset_name: app-debug.apk
-      #     asset_content_type: application/vnd.android.package-archive
       - name: Download Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2
         with:
           name: app-release.apk
-        
-      - name: Create Release notes
-        uses: ncipollo/release-action@v1
+          path: ./downloaded-artifact
+
+      - name: Install Conventional Changelog
+        run: npm install -g conventional-changelog-cli
+
+      - name: Generate Changelog
+        run: conventional-changelog -p angular -i CHANGELOG.md -s
+
+      - name: Create Release
+        id: create-release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: "v${{ github.run_number }}"
-          commit: ${{ github.sha }}
-          artifacts: "./downloaded-artifact/app-release.apk"
+          tag_name: v${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          body_path: ./CHANGELOG.md
+          draft: false
+          prerelease: false
+
+      - name: Check current directory
+        run: |
+          ls -alh
+
+      - name: Upload APK to Github
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./downloaded-artifact/app-debug.apk
+          asset_name: app-debug.apk
+          asset_content_type: application/vnd.android.package-archive
+      # - name: Download Artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: app-release.apk
+        
+      # - name: Create Release notes
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     tag: "v${{ github.run_number }}"
+      #     commit: ${{ github.sha }}
+      #     artifacts: "./downloaded-artifact/app-release.apk"
