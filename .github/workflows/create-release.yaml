@@ -70,4 +70,6 @@ jobs:
       - name: Create Release notes
         uses: ncipollo/release-action@v1
         with:
+          tag: "v${{ github.run_number }}"
+          commit: ${{ github.sha }}
           artifacts: "app-release.apk"
