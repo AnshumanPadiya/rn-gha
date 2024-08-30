@@ -62,7 +62,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: ./downloaded-artifact/app-release.apk
+          asset_path: ./downloaded-artifact/debug/app-release.apk
           asset_name: app-release.apk
           asset_content_type: application/vnd.android.package-archive
       # - name: Download Artifact
