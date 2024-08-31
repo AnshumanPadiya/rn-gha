@@ -1,6 +1,12 @@
 name: "Build Release APK and IPA files"
 
 on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Build type"
+        required: false
+        default: "debug"
   push:
     branches:
       - main
@@ -97,34 +103,28 @@ jobs:
         with:
           minor-wording: "add,Adds,new"
           major-wording: "MAJOR,cut-major"
-          patch-wording:
-            "patch,fixes" 
+          patch-wording: "patch,fixes"
           rc-wording: "RELEASE,alpha"
 
-      - name:
-          Build Android Release
-          # yarn react-native bundle \
-          # --platform android \
-          # --dev false \
-          # --entry-file \
-          # index.js \
-          # --bundle-output \
-          # android/app/src/main/assets/index.android.bundle \
-          # --assets-dest android/app/src/main/res
+      - name: Build Android Release
         run: |
           cd android 
-          ./gradlew :app:assembleDebug
+          if [ "${{ github.event.inputs.build_type }}" == "release" ]; then
+            ./gradlew :app:assembleRelease
+          else
+            ./gradlew :app:assembleDebug
+          fi
 
       - name: Upload Artifact
         id: upload-artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-release.apk
+          name: app-${{ github.event.inputs.build_type }}.apk
           path: android/app/build/outputs/apk/
 
   create-release-notes:
     needs: build-android
-    if: ${{ needs.build-android.outputs.artifact-success == 'success' }}
+    if: ${{ github.event.inputs.build_type == 'release' && needs.build-android.outputs.artifact-success == 'success' }}
     uses: ./.github/workflows/create-release.yaml
     with:
       RESOURCE_FAMILY: ${{ inputs.RESOURCE_FAMILY }}
